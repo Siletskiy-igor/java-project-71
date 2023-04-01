@@ -4,7 +4,6 @@ import picocli.CommandLine;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
 
-import java.io.File;
 import java.util.concurrent.Callable;
 
 @Command (name = "gendiff", description = "Compares two configuration files and shows a difference.")
@@ -22,7 +21,9 @@ public class App implements Callable<Integer> {
     @Option(names = {"-h", "--help"}, usageHelp = true, description = "display this @|fg(blue) help|@ message")
     boolean usageHelpRequested;
 
-    @Option(names = {"-f", "--format"}, defaultValue = "stylish", description = "output format [default: ${DEFAULT-VALUE}]", paramLabel = "format")
+    @Option(names = {"-f", "--format"}, defaultValue = "stylish",
+            description = "output format [default: ${DEFAULT-VALUE}]",
+            paramLabel = "format")
     String format;
 
     @Override

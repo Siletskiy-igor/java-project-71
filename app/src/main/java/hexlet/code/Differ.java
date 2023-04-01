@@ -3,14 +3,10 @@ package hexlet.code;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import java.io.File;
-import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 import java.util.TreeMap;
 
 public class Differ {
@@ -27,12 +23,19 @@ public class Differ {
         for (Map.Entry<String, Object> e: data1.entrySet()) {
             String data1Key = e.getKey();
             Object data1Value = e.getValue();
-            if(data2.containsKey(data1Key) && data2.get(data1Key).equals(data1Value)) {
+            if (data2.containsKey(data1Key) && data2.get(data1Key).equals(data1Value)) {
                 stringBuilder.append("  ").append(data1Key).append(": ").append(data1Value).append("\n");
             } else if (!data2.containsKey(data1Key)) {
                 stringBuilder.append("- ").append(data1Key).append(": ").append(data1Value).append("\n");
-            } else if (data2.containsKey(data1Key) && !data2.get(data1Key).equals(data1Value)){
-                stringBuilder.append("- ").append(data1Key).append(": ").append(data1Value).append("\n").append("+ ").append(data1Key).append(": ").append(data2.get(data1Key)).append("\n");
+            } else if (data2.containsKey(data1Key) && !data2.get(data1Key).equals(data1Value)) {
+                stringBuilder.append("- ")
+                        .append(data1Key).append(": ")
+                        .append(data1Value).append("\n")
+                        .append("+ ")
+                        .append(data1Key)
+                        .append(": ")
+                        .append(data2.get(data1Key))
+                        .append("\n");
             }
         }
         for (String e: data2.keySet()) {
@@ -59,7 +62,7 @@ public class Differ {
 
     public static TreeMap<String, Object> parce(String content) throws Exception {
         ObjectMapper objectMapper = new ObjectMapper();
-        return objectMapper.readValue(content, new TypeReference<>() {});
+        return objectMapper.readValue(content, new TypeReference<>() { });
     }
 
 
