@@ -1,9 +1,16 @@
 package hexlet.code;
 
+
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.TreeSet;
+import java.util.HashMap;
+import java.util.Objects;
 
 public class Differ {
 
@@ -18,35 +25,9 @@ public class Differ {
         Map<String, Object> data1 = Parser.parce(content1, filetype1);
         Map<String, Object> data2 = Parser.parce(content2, filetype2);
 
-        StringBuilder stringBuilder = new StringBuilder("{\n");
+        List<Map<String, Object>> dataDiff = getDataDiff(data1, data2);
 
-        for (Map.Entry<String, Object> e: data1.entrySet()) {
-            String data1Key = e.getKey();
-            Object data1Value = e.getValue();
-
-            if (data2.containsKey(data1Key) && data2.get(data1Key).equals(data1Value)) {
-                stringBuilder.append("  ").append(data1Key).append(": ").append(data1Value).append("\n");
-            } else if (!data2.containsKey(data1Key)) {
-                stringBuilder.append("- ").append(data1Key).append(": ").append(data1Value).append("\n");
-            } else if (data2.containsKey(data1Key) && !data2.get(data1Key).equals(data1Value)) {
-                stringBuilder.append("- ")
-                        .append(data1Key).append(": ")
-                        .append(data1Value).append("\n")
-                        .append("+ ")
-                        .append(data1Key)
-                        .append(": ")
-                        .append(data2.get(data1Key))
-                        .append("\n");
-            }
-        }
-
-        for (String e: data2.keySet()) {
-            if (!data1.containsKey(e)) {
-                stringBuilder.append("+ ").append(e).append(": ").append(data2.get(e)).append("\n");
-            }
-        }
-        stringBuilder.append("}");
-        return stringBuilder.toString();
+        return stylish(dataDiff);
     }
     public static String getContent(String possiblePath) throws Exception {
 
@@ -62,6 +43,81 @@ public class Differ {
 
     public static String getFiletype(String filepath) {
         return filepath.substring(filepath.indexOf("."));
+    }
+
+    public static List<Map<String, Object>> getDataDiff(Map<String, Object> data1, Map<String, Object> data2)  {
+        List<Map<String, Object>> dataDiff = new ArrayList<>();
+        Set<String> keySet = new TreeSet<>(data1.keySet());
+        keySet.addAll(data2.keySet());
+
+        for (String key: keySet) {
+            Map<String, Object> currentMap = new HashMap<>();
+            if ((data1.containsKey(key) && data2.containsKey(key)) && !Objects.equals(data1.get(key), data2.get(key))) {
+                currentMap.put("key", key);
+                currentMap.put("old value", data1.get(key));
+                currentMap.put("new value", data2.get(key));
+                currentMap.put("condition", "modified");
+            } else if (data1.containsKey(key) && !data2.containsKey(key)) {
+                currentMap.put("key", key);
+                currentMap.put("old value", data1.get(key));
+                currentMap.put("new value", "");
+                currentMap.put("condition", "deleted");
+            } else if (!data1.containsKey(key) && data2.containsKey(key)) {
+                currentMap.put("key", key);
+                currentMap.put("old value", "");
+                currentMap.put("new value", data2.get(key));
+                currentMap.put("condition", "added");
+            } else {
+                currentMap.put("key", key);
+                currentMap.put("old value", data1.get(key));
+                currentMap.put("new value", data2.get(key));
+                currentMap.put("condition", "not changed");
+            }
+            dataDiff.add(currentMap);
+        }
+        return dataDiff;
+    }
+
+    public static String stylish(List<Map<String, Object>> dataDiff) {
+        StringBuilder stringBuilder = new StringBuilder("{\n");
+        for (Map<String, Object> difference: dataDiff) {
+            if (difference.get("condition").toString().equals("modified")) {
+                stringBuilder.append("  ")
+                        .append("- ")
+                        .append(difference.get("key"))
+                        .append(": ")
+                        .append(difference.get("old value"))
+                        .append("\n")
+                        .append("  ")
+                        .append("+ ")
+                        .append(difference.get("key"))
+                        .append(": ")
+                        .append(difference.get("new value"))
+                        .append("\n");
+            } else if (difference.get("condition").equals("deleted")) {
+                stringBuilder.append("  ")
+                        .append("- ")
+                        .append(difference.get("key"))
+                        .append(": ")
+                        .append(difference.get("old value"))
+                        .append("\n");
+            } else if (difference.get("condition").equals("added")) {
+                stringBuilder.append("  ")
+                        .append("+ ")
+                        .append(difference.get("key"))
+                        .append(": ")
+                        .append(difference.get("new value"))
+                        .append("\n");
+            } else {
+                stringBuilder.append("    ")
+                        .append(difference.get("key"))
+                        .append(": ")
+                        .append(difference.get("old value"))
+                        .append("\n");
+            }
+        }
+        stringBuilder.append("}");
+        return stringBuilder.toString();
     }
 
 
