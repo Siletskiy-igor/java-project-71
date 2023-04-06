@@ -1,6 +1,7 @@
 package hexlet.code;
 
 
+
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -14,7 +15,7 @@ import java.util.Objects;
 
 public class Differ {
 
-    public static String generate(String filePath1, String filePath2) throws Exception {
+    public static String generate(String filePath1, String filePath2, String formatName) throws Exception {
 
         String filetype1 = getFiletype(filePath1);
         String filetype2 = getFiletype(filePath2);
@@ -27,8 +28,13 @@ public class Differ {
 
         List<Map<String, Object>> dataDiff = getDataDiff(data1, data2);
 
-        return stylish(dataDiff);
+        return Formatter.getFomatter(dataDiff, formatName);
     }
+
+    public static String generate(String filePath1, String filePath2) throws Exception {
+        return generate(filePath1, filePath2, "stylish");
+    }
+
     public static String getContent(String possiblePath) throws Exception {
 
         Path originalPath = Paths.get(possiblePath);
@@ -77,48 +83,4 @@ public class Differ {
         }
         return dataDiff;
     }
-
-    public static String stylish(List<Map<String, Object>> dataDiff) {
-        StringBuilder stringBuilder = new StringBuilder("{\n");
-        for (Map<String, Object> difference: dataDiff) {
-            if (difference.get("condition").toString().equals("modified")) {
-                stringBuilder.append("  ")
-                        .append("- ")
-                        .append(difference.get("key"))
-                        .append(": ")
-                        .append(difference.get("old value"))
-                        .append("\n")
-                        .append("  ")
-                        .append("+ ")
-                        .append(difference.get("key"))
-                        .append(": ")
-                        .append(difference.get("new value"))
-                        .append("\n");
-            } else if (difference.get("condition").equals("deleted")) {
-                stringBuilder.append("  ")
-                        .append("- ")
-                        .append(difference.get("key"))
-                        .append(": ")
-                        .append(difference.get("old value"))
-                        .append("\n");
-            } else if (difference.get("condition").equals("added")) {
-                stringBuilder.append("  ")
-                        .append("+ ")
-                        .append(difference.get("key"))
-                        .append(": ")
-                        .append(difference.get("new value"))
-                        .append("\n");
-            } else {
-                stringBuilder.append("    ")
-                        .append(difference.get("key"))
-                        .append(": ")
-                        .append(difference.get("old value"))
-                        .append("\n");
-            }
-        }
-        stringBuilder.append("}");
-        return stringBuilder.toString();
-    }
-
-
 }

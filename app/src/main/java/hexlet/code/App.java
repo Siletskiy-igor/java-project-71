@@ -30,14 +30,14 @@ public class App implements Callable<Integer> {
     boolean usageHelpRequested;
 
     @Option(names = {"-f", "--format"},
+            description = "output format: stylish, plain [default: ${DEFAULT-VALUE}]",
             defaultValue = "stylish",
-            description = "output format [default: ${DEFAULT-VALUE}]",
             paramLabel = "format")
     String format;
 
     @Override
     public Integer call() throws Exception {
-        System.out.println(Differ.generate(file1, file2));
+        System.out.println(Differ.generate(file1, file2, format));
         return 0;
     }
 
