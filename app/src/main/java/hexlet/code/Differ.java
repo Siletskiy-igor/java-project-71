@@ -1,7 +1,5 @@
 package hexlet.code;
 
-
-
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -14,18 +12,13 @@ import java.util.HashMap;
 import java.util.Objects;
 
 public class Differ {
-
     public static String generate(String filePath1, String filePath2, String formatName) throws Exception {
-
         String filetype1 = getFiletype(filePath1);
         String filetype2 = getFiletype(filePath2);
-
         String content1 = getContent(filePath1);
         String content2 = getContent(filePath2);
-
         Map<String, Object> data1 = Parser.parce(content1, filetype1);
         Map<String, Object> data2 = Parser.parce(content2, filetype2);
-
         List<Map<String, Object>> dataDiff = getDataDiff(data1, data2);
 
         return Formatter.getFomatter(dataDiff, formatName);
@@ -36,14 +29,12 @@ public class Differ {
     }
 
     public static String getContent(String possiblePath) throws Exception {
-
         Path originalPath = Paths.get(possiblePath);
         Path absolutePath = originalPath.toAbsolutePath().normalize();
 
         if (!Files.exists(absolutePath)) {
-            throw new Exception("File '" + absolutePath + "' does not exist");
+            throw new Exception("File '" + absolutePath + " does not exist");
         }
-
         return Files.readString(absolutePath);
     }
 
@@ -54,10 +45,12 @@ public class Differ {
     public static List<Map<String, Object>> getDataDiff(Map<String, Object> data1, Map<String, Object> data2)  {
         List<Map<String, Object>> dataDiff = new ArrayList<>();
         Set<String> keySet = new TreeSet<>(data1.keySet());
+
         keySet.addAll(data2.keySet());
 
         for (String key: keySet) {
             Map<String, Object> currentMap = new HashMap<>();
+
             if ((data1.containsKey(key) && data2.containsKey(key)) && !Objects.equals(data1.get(key), data2.get(key))) {
                 currentMap.put("key", key);
                 currentMap.put("old value", data1.get(key));
@@ -66,11 +59,9 @@ public class Differ {
             } else if (data1.containsKey(key) && !data2.containsKey(key)) {
                 currentMap.put("key", key);
                 currentMap.put("old value", data1.get(key));
-                currentMap.put("new value", "");
                 currentMap.put("condition", "deleted");
             } else if (!data1.containsKey(key) && data2.containsKey(key)) {
                 currentMap.put("key", key);
-                currentMap.put("old value", "");
                 currentMap.put("new value", data2.get(key));
                 currentMap.put("condition", "added");
             } else {

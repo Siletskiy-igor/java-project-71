@@ -3,7 +3,6 @@ package hexlet.code;
 import picocli.CommandLine;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
-
 import java.util.concurrent.Callable;
 
 @Command (name = "gendiff", description = "Compares two configuration files and shows a difference.")
@@ -30,7 +29,7 @@ public class App implements Callable<Integer> {
     boolean usageHelpRequested;
 
     @Option(names = {"-f", "--format"},
-            description = "output format: stylish, plain [default: ${DEFAULT-VALUE}]",
+            description = "output format: stylish, plain, json [default: ${DEFAULT-VALUE}]",
             defaultValue = "stylish",
             paramLabel = "format")
     String format;

@@ -6,6 +6,7 @@ import java.util.Map;
 public class Stylish {
     public static String stylish(List<Map<String, Object>> dataDiff) {
         StringBuilder stringBuilder = new StringBuilder("{\n");
+
         for (Map<String, Object> difference: dataDiff) {
             if (difference.get("condition").toString().equals("modified")) {
                 stringBuilder.append("  ")

@@ -1,6 +1,5 @@
 package hexlet.code.formatters;
 
-
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -10,6 +9,7 @@ import java.util.Arrays;
 public class Plain {
     public static String plain(List<Map<String, Object>> dataDiff) {
         StringBuilder stringBuilder = new StringBuilder();
+
         for (Map<String, Object> difference: dataDiff) {
             if (difference.get("condition").equals("modified")) {
                 stringBuilder.append("Property ")
@@ -17,9 +17,9 @@ public class Plain {
                         .append(difference.get("key"))
                         .append("'")
                         .append(" was updated. From ")
-                        .append(chooseValue(difference.get("old value")))
+                        .append(valueSelection(difference.get("old value")))
                         .append(" to ")
-                        .append(chooseValue(difference.get("new value")))
+                        .append(valueSelection(difference.get("new value")))
                         .append("\n");
             } else if (difference.get("condition").equals("deleted")) {
                 stringBuilder.append("Property ")
@@ -34,7 +34,7 @@ public class Plain {
                         .append(difference.get("key"))
                         .append("'")
                         .append(" was added with value: ")
-                        .append(chooseValue(difference.get("new value")))
+                        .append(valueSelection(difference.get("new value")))
                         .append("\n");
             } else {
                 stringBuilder.append("");
@@ -43,11 +43,10 @@ public class Plain {
         return stringBuilder.toString().trim();
     }
 
-    public static String chooseValue(Object value) {
+    public static String valueSelection(Object value) {
         if (value == null) {
             return null;
-        }
-        if (value.getClass() == LinkedHashMap.class
+        } else if (value.getClass() == LinkedHashMap.class
                 || value.getClass() == Arrays.class
                 || value.getClass() == ArrayList.class) {
             return "[complex value]";
