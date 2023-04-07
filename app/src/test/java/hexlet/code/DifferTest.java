@@ -32,7 +32,8 @@ public class DifferTest {
                 + "  - setting3: true\n"
                 + "  + setting3: none"
                 + "\n}";
-        assertEquals(expected, Differ.generate("filepath1.json", "filepath2.json"));
+        assertEquals(expected, Differ.generate("src/test/resources/filepath1.json",
+                "src/test/resources/filepath2.json"));
     }
 
     @Test
@@ -50,7 +51,8 @@ public class DifferTest {
                 + "Property 'setting1' was updated. From 'Some value' to 'Another value'\n"
                 + "Property 'setting2' was updated. From 200 to 300\n"
                 + "Property 'setting3' was updated. From true to 'none'";
-        assertEquals(expected, Differ.generate("filepath1.json", "filepath2.json", "plain"));
+        assertEquals(expected, Differ.generate("src/test/resources/filepath1.json",
+                "src/test/resources/filepath2.json", "plain"));
     }
 
     @Test
@@ -112,6 +114,7 @@ public class DifferTest {
                 + "\"new value\":\"none\","
                 + "\"key\":\"setting3\"}"
                 + "]";
-        assertEquals(expected, Differ.generate("filepath1.json", "filepath2.json", "json"));
+        assertEquals(expected, Differ.generate("src/test/resources/filepath1.json",
+                "src/test/resources/filepath2.json", "json"));
     }
 }
