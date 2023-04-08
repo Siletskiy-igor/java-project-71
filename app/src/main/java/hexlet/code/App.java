@@ -6,7 +6,7 @@ import picocli.CommandLine.Option;
 import java.util.concurrent.Callable;
 
 @Command (name = "gendiff", description = "Compares two configuration files and shows a difference.")
-public class App implements Callable<Integer> {
+class App implements Callable<Integer> {
 
     @CommandLine.Parameters(index = "0",
             description = "path to first file",
@@ -21,12 +21,12 @@ public class App implements Callable<Integer> {
     @Option(names = {"-V", "--version"},
             versionHelp = true,
             description = "display version info")
-    boolean versionInfoRequested;
+    private boolean versionInfoRequested;
 
     @Option(names = {"-h", "--help"},
             usageHelp = true,
             description = "display this @|fg(blue) help|@ message")
-    boolean usageHelpRequested;
+    private boolean usageHelpRequested;
 
     @Option(names = {"-f", "--format"},
             description = "output format: stylish, plain, json [default: ${DEFAULT-VALUE}]",
@@ -35,7 +35,7 @@ public class App implements Callable<Integer> {
     String format;
 
     @Override
-    public Integer call() throws Exception {
+    public  Integer call() throws Exception {
         System.out.println(Differ.generate(file1, file2, format));
         return 0;
     }
