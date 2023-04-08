@@ -44,11 +44,11 @@ public class Differ {
 
     public static List<Map<String, Object>> getDataDiff(Map<String, Object> data1, Map<String, Object> data2)  {
         List<Map<String, Object>> dataDiff = new ArrayList<>();
-        Set<String> keySet = new TreeSet<>(data1.keySet());
+        Set<String> combiningSetsOfKeys = new TreeSet<>(data1.keySet());
 
-        keySet.addAll(data2.keySet());
+        combiningSetsOfKeys.addAll(data2.keySet());
 
-        for (String key: keySet) {
+        for (String key: combiningSetsOfKeys) {
             Map<String, Object> currentMap = new HashMap<>();
 
             if ((data1.containsKey(key) && data2.containsKey(key)) && !Objects.equals(data1.get(key), data2.get(key))) {
