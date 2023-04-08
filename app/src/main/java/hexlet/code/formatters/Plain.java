@@ -12,29 +12,15 @@ public class Plain {
 
         for (Map<String, Object> difference: dataDiff) {
             if (difference.get("condition").equals("modified")) {
-                stringBuilder.append("Property ")
-                        .append("'")
-                        .append(difference.get("key"))
-                        .append("'")
-                        .append(" was updated. From ")
-                        .append(valueSelection(difference.get("old value")))
-                        .append(" to ")
-                        .append(valueSelection(difference.get("new value")))
-                        .append("\n");
+                stringBuilder.append("Property ").append("'").append(difference.get("key"))
+                        .append("'").append(" was updated. From ").append(valueSelection(difference.get("old value")))
+                        .append(" to ").append(valueSelection(difference.get("new value"))).append("\n");
             } else if (difference.get("condition").equals("deleted")) {
-                stringBuilder.append("Property ")
-                        .append("'")
-                        .append(difference.get("key"))
-                        .append("'")
-                        .append(" was removed")
-                        .append("\n");
+                stringBuilder.append("Property ").append("'").append(difference.get("key")).append("'")
+                        .append(" was removed").append("\n");
             } else if (difference.get("condition").equals("added")) {
-                stringBuilder.append("Property ")
-                        .append("'")
-                        .append(difference.get("key"))
-                        .append("'")
-                        .append(" was added with value: ")
-                        .append(valueSelection(difference.get("new value")))
+                stringBuilder.append("Property ").append("'").append(difference.get("key")).append("'")
+                        .append(" was added with value: ").append(valueSelection(difference.get("new value")))
                         .append("\n");
             } else {
                 stringBuilder.append("");

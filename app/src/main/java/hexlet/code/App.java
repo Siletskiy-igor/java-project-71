@@ -40,7 +40,7 @@ class App implements Callable<Integer> {
         return 0;
     }
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) {
         int exitCode = new CommandLine(new App()).execute(args);
         System.exit(exitCode);
     }

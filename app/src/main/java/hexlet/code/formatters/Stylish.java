@@ -9,38 +9,18 @@ public class Stylish {
 
         for (Map<String, Object> difference: dataDiff) {
             if (difference.get("condition").toString().equals("modified")) {
-                stringBuilder.append("  ")
-                        .append("- ")
-                        .append(difference.get("key"))
-                        .append(": ")
-                        .append(difference.get("old value"))
-                        .append("\n")
-                        .append("  ")
-                        .append("+ ")
-                        .append(difference.get("key"))
-                        .append(": ")
-                        .append(difference.get("new value"))
-                        .append("\n");
+                stringBuilder.append("  ").append("- ").append(difference.get("key")).append(": ")
+                        .append(difference.get("old value")).append("\n").append("  ").append("+ ")
+                        .append(difference.get("key")).append(": ").append(difference.get("new value")).append("\n");
             } else if (difference.get("condition").equals("deleted")) {
-                stringBuilder.append("  ")
-                        .append("- ")
-                        .append(difference.get("key"))
-                        .append(": ")
-                        .append(difference.get("old value"))
-                        .append("\n");
+                stringBuilder.append("  ").append("- ").append(difference.get("key")).append(": ")
+                        .append(difference.get("old value")).append("\n");
             } else if (difference.get("condition").equals("added")) {
-                stringBuilder.append("  ")
-                        .append("+ ")
-                        .append(difference.get("key"))
-                        .append(": ")
-                        .append(difference.get("new value"))
-                        .append("\n");
+                stringBuilder.append("  ").append("+ ").append(difference.get("key")).append(": ")
+                        .append(difference.get("new value")).append("\n");
             } else {
-                stringBuilder.append("    ")
-                        .append(difference.get("key"))
-                        .append(": ")
-                        .append(difference.get("old value"))
-                        .append("\n");
+                stringBuilder.append("    ").append(difference.get("key")).append(": ")
+                        .append(difference.get("old value")).append("\n");
             }
         }
         stringBuilder.append("}");
