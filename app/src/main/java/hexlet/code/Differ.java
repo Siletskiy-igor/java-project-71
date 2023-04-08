@@ -67,7 +67,6 @@ public class Differ {
             } else {
                 currentMap.put("key", key);
                 currentMap.put("old value", data1.get(key));
-                currentMap.put("new value", data2.get(key));
                 currentMap.put("condition", "not changed");
             }
             dataDiff.add(currentMap);
