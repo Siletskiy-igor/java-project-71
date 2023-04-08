@@ -32,7 +32,7 @@ class App implements Callable<Integer> {
             description = "output format: stylish, plain, json [default: ${DEFAULT-VALUE}]",
             defaultValue = "stylish",
             paramLabel = "format")
-    String format;
+    private String format;
 
     @Override
     public  Integer call() throws Exception {
