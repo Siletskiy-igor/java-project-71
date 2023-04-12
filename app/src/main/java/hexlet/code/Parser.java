@@ -6,15 +6,20 @@ import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import java.util.TreeMap;
 
 public class Parser {
-    public static TreeMap<String, Object> parce(String content, String filetype) throws Exception {
+    public static TreeMap<String, Object> parse(String content, String format) throws Exception {
         ObjectMapper objectMapper = null;
 
-        if (filetype.equals(".json")) {
-            objectMapper = new ObjectMapper();
-        } else if (filetype.equals(".yml")) {
-            objectMapper = new ObjectMapper(new YAMLFactory());
-        } else {
-            throw new Exception("unknown format");
+        switch (format) {
+            case "json":
+                objectMapper = new ObjectMapper();
+                break;
+            case "yml":
+                objectMapper = new ObjectMapper(new YAMLFactory());
+                break;
+            case "yaml":
+                objectMapper = new ObjectMapper(new YAMLFactory());
+                break;
+            default: throw new Exception("Unknown format" + format);
         }
         return objectMapper.readValue(content, new TypeReference<>() { });
     }

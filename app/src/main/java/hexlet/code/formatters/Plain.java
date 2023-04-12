@@ -1,11 +1,7 @@
 package hexlet.code.formatters;
 
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.ArrayList;
-import java.util.Arrays;
-
 public class Plain {
     public static String plain(List<Map<String, Object>> dataDiff) {
         StringBuilder result = new StringBuilder();
@@ -31,14 +27,17 @@ public class Plain {
 
     public static String valueSelection(Object value) {
         if (value == null) {
-            return null;
-        } else if (value.getClass() == LinkedHashMap.class
-                || value.getClass() == Arrays.class
-                || value.getClass() == ArrayList.class) {
+            return "null";
+        }
+
+        if (value instanceof List || value instanceof Map) {
             return "[complex value]";
-        } else if (value.getClass() == String.class) {
+        }
+
+        if (value instanceof String) {
             return "'" + value + "'";
         }
+
         return value.toString();
     }
 }
