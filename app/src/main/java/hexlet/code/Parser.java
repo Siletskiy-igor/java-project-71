@@ -19,6 +19,7 @@ public class Parser {
             case "yaml":
                 objectMapper = new ObjectMapper(new YAMLFactory());
                 break;
+
             default: throw new Exception("Unknown format" + format);
         }
         return objectMapper.readValue(content, new TypeReference<>() { });

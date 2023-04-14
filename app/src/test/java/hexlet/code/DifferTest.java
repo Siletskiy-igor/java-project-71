@@ -33,23 +33,60 @@ class DifferTest {
 
 
     @Test
-    public void differStylishTest() throws Exception {
+    public void differJsonDefaultTest() throws Exception {
         String expected = resultStylish;
         assertEquals(expected, Differ.generate("src/test/resources/filepath1.json",
                 "src/test/resources/filepath2.json"));
     }
 
     @Test
-    public void differPlainTest() throws Exception {
+    public void differYamlDefaultTest() throws Exception {
+        String expected = resultStylish;
+        assertEquals(expected, Differ.generate("src/test/resources/filepath1.yml",
+                "src/test/resources/filepath2.yml"));
+    }
+
+    @Test
+    public void differYamlStylishTest() throws Exception {
+        String expected = resultStylish;
+        assertEquals(expected, Differ.generate("src/test/resources/filepath1.yml",
+                "src/test/resources/filepath2.yml", "stylish"));
+    }
+
+    @Test
+    public void differJsonStylishTest() throws Exception {
+        String expected = resultStylish;
+        assertEquals(expected, Differ.generate("src/test/resources/filepath1.json",
+                "src/test/resources/filepath2.json", "stylish"));
+    }
+
+    @Test
+    public void differJsonPlainTest() throws Exception {
         String expected = resultPlain;
         assertEquals(expected, Differ.generate("src/test/resources/filepath1.json",
                 "src/test/resources/filepath2.json", "plain"));
     }
 
     @Test
-    public void differJsonTest() throws Exception {
+    public void differYamlPlainTest() throws Exception {
+        String expected = resultPlain;
+        assertEquals(expected, Differ.generate("src/test/resources/filepath1.yml",
+                "src/test/resources/filepath2.yml", "plain"));
+    }
+
+    @Test
+    public void differJsonJsonTest() throws Exception {
         String expected = resultJson;
         assertEquals(expected, Differ.generate("src/test/resources/filepath1.json",
                 "src/test/resources/filepath2.json", "json"));
     }
+
+    @Test
+    public void differYamlJsonTest() throws Exception {
+        String expected = resultJson;
+        assertEquals(expected, Differ.generate("src/test/resources/filepath1.yml",
+                "src/test/resources/filepath2.yml", "json"));
+    }
+
+
 }

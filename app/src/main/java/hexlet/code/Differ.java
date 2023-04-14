@@ -34,7 +34,10 @@ public class Differ {
     }
 
     public static String getFiletype(String filepath) {
-        return filepath.substring(filepath.indexOf(".") + 1);
+        int index = filepath.lastIndexOf('.');
+        return index > 0
+                ? filepath.substring(index + 1)
+                : "";
     }
 
 
